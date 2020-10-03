@@ -44,7 +44,7 @@ def run_server():
 
           print("timer started")
       else:
-        client_data = json.loads(conn.recv(1024).decode())
+        client_data = json.loads(wo.recv(1024).decode())
         client_data["client_connection_date"] = datetime.now().isoformat(" ", "seconds")
         data["clients"].append(client_data)
         rlist.remove(wo)
