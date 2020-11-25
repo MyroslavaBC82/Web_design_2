@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.decorators import action
-from .models import drone, Gallery, Model
+from .models import Drone, Gallery, Model
 from .serializers import droneSerializer, GallerySerializer, modelSerializer
 
 
@@ -18,7 +18,7 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 class DroneViewSet(ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = droneSerializer
-    queryset = drone.objects.all()
+    queryset = Drone.objects.all()
     filter_backends = (SearchFilter,)
     search_fields = ('^name', '^model__name')
 

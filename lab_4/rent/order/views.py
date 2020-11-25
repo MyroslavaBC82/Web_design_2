@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .task import send_order_status_to_email
-from .models import drone, Coupon, Order
+from .models import Drone, Coupon, Order
 from .serializers import OrderSerializer
 
 
@@ -41,7 +41,7 @@ class CreateOrderView(CreateAPIView):
 
     def perform_create(self, serializer):
         pk = self.request.data.get('pk')
-        drone = drone.objects.get(pk=pk)
+        drone = Drone.objects.get(pk=pk)
         serializer.save(user=self.request.user, drone=drone)
         messages.info(self.request,
                       format_html('New order from {}! <br> Click <a href="{}"> here </a> to view order.',
@@ -118,7 +118,7 @@ class RatedroneView(APIView):
         order = get_object_or_404(Order, pk=pk)
         order.rate = rate
         order.save()
-        drone = drone.objects.get(pk=order.drone.pk)
+        drone = Drone.objects.get(pk=order.drone.pk)
         drone.rate = round(drone.orders.aggregate(rate=Avg('rate')).get('rate'), 2)
         drone.save()
         messages.info(self.request,

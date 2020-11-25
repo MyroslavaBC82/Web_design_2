@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, Serializer
-from .models import drone, Gallery, Model
+from .models import Drone, Gallery, Model
 
 
 class modelSerializer(Serializer):
@@ -14,7 +14,7 @@ class modelSerializer(Serializer):
 
 class droneSerializer(ModelSerializer):
     class Meta:
-        model = drone
+        model = Drone
         fields = '__all__'
         depth = 2
 

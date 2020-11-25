@@ -44,7 +44,7 @@ class AditionalEquipment(models.Model):
         return self.name
 
 
-class drone(models.Model):
+class Drone(models.Model):
     name = models.CharField(max_length=20)
     model_year = models.IntegerField()
     price_hourly = models.IntegerField()
@@ -65,7 +65,7 @@ class drone(models.Model):
 
 class Gallery(models.Model):
     photo = models.ImageField(upload_to='drones/%Y/%m/%d')
-    drone = models.ForeignKey(drone, on_delete=models.CASCADE, related_name='photos')
+    drone = models.ForeignKey(Drone, on_delete=models.CASCADE, related_name='photos')
 
     class Meta:
         db_table = 'gallery'

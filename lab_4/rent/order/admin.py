@@ -18,7 +18,7 @@ class CouponModelAdmin(admin.ModelAdmin):
 
 def approve_order(modeladmin, request, queryset):
     queryset.update(approved=True)
-    drone = queryset[0].drone
+    drone = queryset[0].Drone
     drone.available = False
     drone.save()
     approve_order.short_description = 'Approve order'
@@ -30,7 +30,7 @@ def finish_order(modeladmin, request, queryset):
     now = timezone.now()
     if is_paid and now >= order_end_date:
         queryset.update(finished=True)
-        drone = queryset[0].drone
+        drone = queryset[0].Drone
         drone.available = True
         drone.save()
         pk = queryset[0].pk

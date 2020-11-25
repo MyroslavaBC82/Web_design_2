@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils.crypto import get_random_string
-from drone.models import drone
+from drone.models import Drone
 
 
 class Coupon(models.Model):
@@ -31,7 +31,7 @@ class Order(models.Model):
     rate = models.IntegerField(default=0)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                              related_name='orders')
-    drone = models.ForeignKey(drone, on_delete=models.CASCADE, related_name='orders')
+    drone = models.ForeignKey(Drone, on_delete=models.CASCADE, related_name='orders')
 
     class Meta:
         db_table = 'order'

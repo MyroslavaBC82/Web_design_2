@@ -20,7 +20,7 @@ class ModelAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-@admin.register(models.drone)
+@admin.register(models.Drone)
 class droneAdmin(admin.ModelAdmin):
     list_display = ('name', 'model', 'model_year', 'engine', 'price_hourly', 'available', 'rate')
     search_fields = ('name',)
@@ -41,7 +41,7 @@ class GalleryAdmin(admin.ModelAdmin):
     list_select_related = ('drone',)
 
     def drone(self, obj):
-        return obj.drone
+        return obj.Drone
 
 
 

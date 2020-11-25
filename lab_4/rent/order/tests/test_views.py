@@ -7,7 +7,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED,\
     HTTP_400_BAD_REQUEST
 from rest_framework.test import APIClient
-from drone.models import drone
+from drone.models import Drone
 from order.models import Coupon, Order
 
 username = 'test_user'
