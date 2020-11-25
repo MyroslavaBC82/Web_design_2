@@ -13,7 +13,7 @@ from rest_framework.generics import CreateAPIView, get_object_or_404, ListAPIVie
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .task import send_pdf_to_email, send_order_status_to_email
+from .task import send_order_status_to_email
 from .models import drone, Coupon, Order
 from .serializers import OrderSerializer
 
@@ -133,7 +133,7 @@ class RatedroneView(APIView):
 def admin_send_pdf_order_detail_to_email(request, pk):
     order = get_object_or_404(Order, pk=pk)
     if order.approved and not order.paid:
-        send_pdf_to_email.delay(pk)
+        # send_pdf_to_email.delay(pk)
         return HttpResponse(f'<i>Email has been sent successfully to {order.user.get_full_name()}!</i>')
     return HttpResponseBadRequest('<i>Oops! The order is not approved yet or it has already been paid.</i>')
 
