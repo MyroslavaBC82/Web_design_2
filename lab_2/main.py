@@ -6,7 +6,6 @@ from datetime import datetime
 
 
 address = ("localhost", 3000)
-lastname = "Liubchenko"
 timer = 20.0
 
 

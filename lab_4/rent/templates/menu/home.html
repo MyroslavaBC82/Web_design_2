@@ -1,0 +1,4 @@
+<a href="{% url 'home' %}" class="navbar-item {% if request.path == '/' %} is-active {% endif %}"> Home </a>
+<a href="{% url 'drone:view_drones' %}"  class="navbar-item {% if 'drone' in request.path %} is-active {% endif %}"> View drones </a>
+<a href="{% url 'account:login' %}" class="navbar-item {% if 'login' in request.path %} is-active {% endif %}"> Login </a>
+<a href="{% url 'account:register' %}" class="navbar-item {% if 'register' in request.path %} is-active {% endif %}"> Register </a>

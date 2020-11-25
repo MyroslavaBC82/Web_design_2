@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% spaceless %}
+{% load staticfiles %}
+{% load compress %}
+{% block title %} View drones — Rent-a-drone {% endblock title %}
+{% block menu %}
+    {% include 'menu/user.html' %}
+{% endblock menu %}
+{% block content %}
+     {{ models }}
+    <section class="section is-small">
+        <a id="view_drones" href="#"><span class="tag is-link">View drones</span></a>
+    </section>
+    <section id="drone_list" class="section is-small" style="display:none;">
+    <div class="box" style="width: 60%; margin-left: 20%;">
+    <div class="columns">
+    <div class="column">
+            <div class="field has-addons">
+    <p class="control">
+        <span class="select">
+        <select id="brand">
+            <option value="">-- Brand --</option>
+            {% for brand in brands %}
+                <option>{{ brand.name }}</option>
+            {% endfor %}
+        </select>
+        </span>
+  </p>
+  <p class="control">
+    <span class="select">
+      <select id="model_year">
+          <option value="">-- Model year --</option>
+          <option value="2000"><= 2000</option>
+          <option value="2005">2001 - 2005</option>
+          <option value="2010">2006 - 2010</option>
+          <option value="2015">2011 - 2015</option>
+          <option value="2016">2016+</option>
+      </select>
+    </span>
+  </p>
+ <p class="control">
+  <input type="number" id="price_from" class="input" min="30" max="300" placeholder="Price from">
+</p>
+<p class="control">
+  <input type="number" id="price_to" class="input" min="30" max="300" placeholder="Price to">
+</p>
+  <p class="control is-expanded">
+    <input class="input" type="text" id="drone_name"
+           placeholder="Enter the name of the drone (e.g. Audi A4)">
+  </p>
+  <p class="control">
+    <a class="button is-danger" id="search_drones"> Search </a>
+  </p>
+</div>
+    </div>
+    </div>
+        <div class="columns">
+        <div class="column is-2">
+            <label class="checkbox">
+        <input type="checkbox" id="top_rated"> 5 star </label>
+            </div>
+            <div class="column">
+                <div class="control">
+              <label class="radio"><input type="radio" name="radio">Diesel</label>
+              <label class="radio"><input type="radio" name="radio">Petrol</label>
+              <label class="radio"><input type="radio" name="radio">Gas</label>
+            </div>
+            </div>
+        </div>
+    </div>
+    </section>
+            <div class="drones">
+            </div>
+        {% block script %}
+{#             {% compress js %}#}
+            <script src="{% static 'drone/js/view_drones.js' %}"></script>
+            <script src="{% static 'drone/js/search_drones.js' %}"></script>
+{#            {% endcompress %}#}
+        {% endblock script %}
+  {% endblock content %}
+ {% endspaceless %}

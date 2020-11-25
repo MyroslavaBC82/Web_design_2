@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% spaceless %}
+{% load staticfiles%}
+{% load compress %}
+{% load bulma_tags %}
+{% block title %} Register — Rent-a-drone {% endblock title %}
+
+{% block content %}
+    <section class="section is-large"></section>
+    <section class="section is-medium"></section>
+    <div class="modal is-active" id="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="droned">
+                <div class="droned-content">
+                    <a href="{% url 'account:login' %}" class="button is-link">Back</a><br><br>
+                <div class="control">
+                    <form action="." method="POST" enctype="multipart/form-data" autocomplete="off">
+                        {% csrf_token %}
+                        {{ form | bulma}}
+                        <div class="field">
+                        <label class="label">Birthdate</label>
+                            <div class="control">
+                            <input type="date" name="user_profile.birth_date" class="input" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                        <label class="label">Address</label>
+                            <div class="control">
+                            <input type="text" name="user_profile.address" class="input">
+                            </div>
+                        </div>
+                        <div class="file">
+                          <label class="file-label">
+                            <input class="file-input" type="file" name="user_profile.photo">
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                              </span>
+                              <span class="file-label">
+                                Choose a photo…
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                        <br>
+                        <input type="submit" class="button is-success" value="Register">
+                    </form>
+                    <button class="modal-close is-medium" id="btn"></button>
+                     <br>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    {% compress js %}
+    <script src="{% static 'modal.js' %}"></script>
+    {% endcompress %}
+{% endblock script %}
+{% endspaceless %}

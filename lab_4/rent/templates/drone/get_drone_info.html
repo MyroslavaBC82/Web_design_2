@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% spaceless %}
+{% load staticfiles %}
+{% block title %} View drone Info — Rent-a-drone {% endblock title %}
+{% block menu %}
+    {% include 'menu/home.html' %}
+{% endblock menu %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'drone/css/slider.css' %}">
+{% endblock css %}
+
+{% block content %}
+<section class="section">
+    <a href="{% url 'drone:view_drones' %}"><span class="tag is-link">Back</span></a>&nbsp;
+    <a id="get_drone_info" href="#"><span class="tag is-link">Get drone info</span></a>
+</section>
+    <section class="section" style="margin-left:38%;">
+     <!-- Order modal -->
+      <div class="modal is-active" id="modal_order" style="display:none;">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+             <div class="droned">
+                <div class="droned-content">
+                    <div class="control">
+                        <label class="label"> Price per hour: $<span id="price"></span></label><br>
+                        <label class="label"> End date: </label>
+                        <input class="input" type="datetime-local" id="end_date" autofocus>
+                        <br><br>
+                        <label class="label">Coupon:</label>
+                        <input class="input" id="coupon" type="text" autofocus maxlength="5" autocomplete="off">
+                        <br><br>
+                        <label class="label">Total Price: $<span id="total_price"></span></label><br>
+                        <a class="button is-success" id="proceed_order"> Proceed Order </a>
+
+
+        </div>
+        </div>
+        </div>
+        </div>
+         <button class="modal-close is-medium" id="btn_modal_order"></button>
+        </div>
+
+        <!-- Unauthorized account -->
+
+        <div class="modal is-active" id="modal_error" style="display:none;">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+             <div class="droned">
+                <div class="droned-content">
+                    Oops! You must to be authorized in order to perform this action. <br>
+                    Click <a href="{% url 'account:login' %}"><span class="tag is-link">here</span></a> to login!
+        </div>
+        </div>
+        </div>
+        </div>
+
+
+    <div class="columns">
+        <div class="column is-5">
+    <div class="droned" style="display:none;">
+  <div class="droned-content">
+    <p class="title">
+    </p>
+    <p class="subtitle">
+    </p>
+  </div>
+  <footer class="droned-footer">
+    <p class="droned-footer-item" style="background: rgb(153, 255, 153);">
+      <span>
+        <a href="#" id="rent-a-drone"> Rent a drone</a>
+      </span>
+    </p>
+  </footer>
+</div>
+</div>
+</div>
+</section>
+<section class="section">
+    <div class="gallery"></div>
+</section>
+        {% block script %}
+            <script src="{% static 'drone/js/image_slider.js' %}"></script>
+            <script src="{% static 'drone/js/get_drone_info.js' %}"></script>
+            <script src="{% static 'modal.js' %}"></script>
+            <script src="{% static 'order/js/proceed_order.js' %}"></script>
+        {% endblock script %}
+{% endblock content %}
+{% endspaceless %}
