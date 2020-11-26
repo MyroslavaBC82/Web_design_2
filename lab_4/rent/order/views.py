@@ -2,7 +2,9 @@ import os
 from json import loads
 import stripe
 from decouple import config
+from django.contrib.auth.models import User, AnonymousUser
 from django.db.models import Q, Avg
+from django.shortcuts import redirect
 from django.utils import timezone
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from django.contrib.admin.views.decorators import staff_member_required
@@ -10,7 +12,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils.html import format_html
 from rest_framework.generics import CreateAPIView, get_object_or_404, ListAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .task import send_order_status_to_email
@@ -19,7 +21,7 @@ from .serializers import OrderSerializer
 
 
 class CheckCouponView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         code = loads(request.body.decode('utf-8')).get('code')
@@ -36,16 +38,21 @@ class CheckCouponView(APIView):
 
 
 class CreateOrderView(CreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
+    # permission_classes = (IsAuthenticated,)
     serializer_class = OrderSerializer
 
     def perform_create(self, serializer):
         pk = self.request.data.get('pk')
         drone = Drone.objects.get(pk=pk)
-        serializer.save(user=self.request.user, drone=drone)
+        if isinstance(self.request.user, AnonymousUser):
+            user = User.objects.get(id=1)
+        else:
+            user = self.request.user
+        serializer.save(user=user, drone=drone)
         messages.info(self.request,
                       format_html('New order from {}! <br> Click <a href="{}"> here </a> to view order.',
-                                  self.request.user.get_full_name(), 'http://localhost:8000/admin/order/order/' +
+                                  user.get_full_name(), 'http://localhost:8000/admin/order/order/' +
                                   str(serializer.data.get('id')) + '/change/'))
         os.system('notify-send "New Order Notification!" "You ordered a new drone."')
 

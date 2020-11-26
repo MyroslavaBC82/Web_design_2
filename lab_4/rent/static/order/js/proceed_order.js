@@ -24,8 +24,10 @@ $('#proceed_order').click(function () {
                 end_date.css('border-color', 'red');
                 return false;
             }
-            axios.defaults.headers.common['Authorization'] = 'Token '
-                + localStorage.getItem('token');
+            if (localStorage.getItem('token') !== null) {
+                axios.defaults.headers.common['Authorization'] = 'Token '
+                    + localStorage.getItem('token');
+            }
             const pk = window.location.pathname.split('/')[2];
             let total_price = $('#total_price').text();
             if (total_price.indexOf('%') >= 0)
@@ -38,7 +40,11 @@ $('#proceed_order').click(function () {
             axios
                 .post(url, data)
                 .then(r => {
-                   window.location.href = 'http://localhost:8000/account/dashboard/';
+                    if (localStorage.getItem('token') === null) {
+                        window.location.href = 'http://localhost:8000/drone/'
+                    }
+                    else
+                       window.location.href = 'http://localhost:8000/account/dashboard/';
                 })
                 .catch(r => {
                     $('#modal_drone').hide();
